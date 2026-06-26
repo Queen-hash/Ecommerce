@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Home, Store, ShoppingCart, User, LucideIcon } from "lucide-react"
 import { cn } from "../lib/utils" // Import disesuaikan dengan posisi file
 
@@ -20,9 +21,28 @@ const ecomNavItems: NavItem[] = [
   { name: "Profile", url: "/Profile", icon: User },
 ]
 
+// Helper buat cek apakah pathname cocok dengan nav item
+function getActiveTab(pathname: string): string {
+  // Cek dari yang paling spesifik dulu (Products, Cart, Profile)
+  // sebelum fallback ke Home
+  for (const item of ecomNavItems) {
+    if (item.url === "/") continue // Skip Home dulu
+    if (pathname === item.url || pathname.startsWith(item.url + "/")) {
+      return item.name
+    }
+  }
+  return "Home"
+}
+
 export function NavBar({ className }: { className?: string }) {
-  const [activeTab, setActiveTab] = useState(ecomNavItems[0].name)
+  const pathname = usePathname()
+  const [activeTab, setActiveTab] = useState(() => getActiveTab(pathname))
   const [isMobile, setIsMobile] = useState(false)
+
+  // Sync activeTab dengan URL setiap kali navigasi terjadi
+  useEffect(() => {
+    setActiveTab(getActiveTab(pathname))
+  }, [pathname])
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +57,7 @@ export function NavBar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+        "fixed bottom-0 sm:bottom-auto sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
         className,
       )}
     >

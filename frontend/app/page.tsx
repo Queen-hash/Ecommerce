@@ -89,17 +89,19 @@ export default function Home() {
 
       {/* --- LAYER KONTEN UTAMA DENGAN ANIMASI --- */}
       <motion.div 
-        initial={{ opacity: 0, y: 30 }} // Awalnya transparan dan agak di bawah
-        animate={{ opacity: 1, y: 0 }}  // Muncul ke posisi normal
-        transition={{ duration: 0.8, ease: "easeOut" }} // Durasi animasi
-        className="relative z-10 flex flex-col items-center w-full max-w-5xl mx-auto mt-12"
+        initial={{ opacity: 0, y: 30 }} 
+        //Ganti 'animate' jadi 'whileInView' biar kebal dari bug HP
+        whileInView={{ opacity: 1, y: 0 }}  
+        viewport={{ once: true }} // Biar jalannya sekali aja
+        transition={{ duration: 0.8, ease: "easeOut" }} 
+        className="relative z-10 flex flex-col items-center w-full max-w-5xl mx-auto mt-12 px-2"
       >
         
         <div className="mb-8 inline-flex items-center rounded-sm border border-indigo-500/40 bg-black/40 px-4 py-1.5 text-xs font-bold tracking-widest uppercase text-indigo-300 backdrop-blur-md shadow-lg">
           New Drops • Summer Collection 26
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter uppercase drop-shadow-[0_8px_8px_rgba(0,0,0,0.9)] font-(family-name:--font-space-grotesk)">
+        <h1 className="text-5xl md:text-8xl font-black text-white mb-6 tracking-tighter uppercase drop-shadow-[0_8px_8px_rgba(0,0,0,0.9)] font-(family-name:--font-space-grotesk)">
           Step Up <br className="hidden sm:block" />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400">
             Your Game.
@@ -111,7 +113,7 @@ export default function Home() {
         </p>
 
         <Link
-          href="/katalog"
+          href="/Products"
           className="bg-white text-black px-10 py-4 rounded-md font-bold text-lg hover:bg-indigo-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] hover:-translate-y-1 uppercase tracking-wider font-(family-name:--font-space-grotesk)"
         >
           Explore Collection
